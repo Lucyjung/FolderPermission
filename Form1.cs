@@ -33,6 +33,7 @@ namespace FolderPermission
             Config.GetConfigurationValue();
             labelStatus.Text = runStatus.Idle.ToString();
             txtOutput.Text = Path.Combine(Path.GetDirectoryName(txtInputFile.Text), "Permission.xlsx");
+            dataGridView.ScrollBars = ScrollBars.Both;
         }
 
         private async void checkBtn_Click(object sender, EventArgs e)
