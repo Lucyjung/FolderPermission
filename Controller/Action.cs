@@ -20,7 +20,7 @@ namespace FolderPermission.Controller
                 {
                     foreach (DataColumn dc in dt.Columns)
                     {
-                        if (dc.ColumnName.Contains(Config.fileServer))
+                        if (dc.ColumnName.ToUpper().Contains(Config.fileServer.ToUpper()))
                         {
                             DataTable userDt = Permission.getPermission(dc.ColumnName);
                             foreach (DataRow dr in userDt.Rows)
@@ -64,7 +64,7 @@ namespace FolderPermission.Controller
                 {
                     foreach (DataColumn dc in dt.Columns)
                     {
-                        if (dc.ColumnName.Contains(Config.fileServer))
+                        if (dc.ColumnName.ToUpper().Contains(Config.fileServer.ToUpper()))
                         {
                             DataTable userDt = Permission.getPermission(dc.ColumnName);
                             // Add, Update
@@ -145,7 +145,7 @@ namespace FolderPermission.Controller
                 {
                     foreach (DataColumn dc in dt.Columns)
                     {
-                        if (dc.ColumnName.Contains(Config.fileServer))
+                        if (dc.ColumnName.ToUpper().Contains(Config.fileServer.ToUpper()))
                         {
                             DataTable userDt = Permission.getPermission(dc.ColumnName);
                             // Add, Update
@@ -156,6 +156,10 @@ namespace FolderPermission.Controller
                                 if (exist.Length > 0 && exist[0]["Permission"].ToString() == dr[dc.ColumnName].ToString())
                                 {
                                     dr[dc.ColumnName] = dr[dc.ColumnName].ToString() + " [" + passString + "]";
+                                }
+                                else if (exist.Length > 0 && exist[0]["Permission"].ToString() == "")
+                                {
+                                    continue;
                                 }
                                 else
                                 {

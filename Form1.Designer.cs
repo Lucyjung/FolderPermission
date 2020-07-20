@@ -46,9 +46,16 @@
             this.txtSearch = new System.Windows.Forms.TextBox();
             this.label4 = new System.Windows.Forms.Label();
             this.pictureBox1 = new System.Windows.Forms.PictureBox();
+            this.menuStrip1 = new System.Windows.Forms.MenuStrip();
+            this.toolStripMenuItem1 = new System.Windows.Forms.ToolStripMenuItem();
+            this.aboutToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
+            this.generateInitialFileToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
+            this.exitToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
+            this.aboutUsToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             ((System.ComponentModel.ISupportInitialize)(this.dataGridView)).BeginInit();
             this.groupBox1.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.pictureBox1)).BeginInit();
+            this.menuStrip1.SuspendLayout();
             this.SuspendLayout();
             // 
             // auditBtn
@@ -218,6 +225,55 @@
             this.pictureBox1.TabIndex = 16;
             this.pictureBox1.TabStop = false;
             // 
+            // menuStrip1
+            // 
+            this.menuStrip1.Items.AddRange(new System.Windows.Forms.ToolStripItem[] {
+            this.toolStripMenuItem1,
+            this.aboutToolStripMenuItem});
+            this.menuStrip1.Location = new System.Drawing.Point(0, 0);
+            this.menuStrip1.Name = "menuStrip1";
+            this.menuStrip1.Size = new System.Drawing.Size(1323, 24);
+            this.menuStrip1.TabIndex = 17;
+            this.menuStrip1.Text = "menuStrip1";
+            // 
+            // toolStripMenuItem1
+            // 
+            this.toolStripMenuItem1.DropDownItems.AddRange(new System.Windows.Forms.ToolStripItem[] {
+            this.generateInitialFileToolStripMenuItem,
+            this.exitToolStripMenuItem});
+            this.toolStripMenuItem1.Name = "toolStripMenuItem1";
+            this.toolStripMenuItem1.Size = new System.Drawing.Size(37, 20);
+            this.toolStripMenuItem1.Text = "File";
+            // 
+            // aboutToolStripMenuItem
+            // 
+            this.aboutToolStripMenuItem.DropDownItems.AddRange(new System.Windows.Forms.ToolStripItem[] {
+            this.aboutUsToolStripMenuItem});
+            this.aboutToolStripMenuItem.Name = "aboutToolStripMenuItem";
+            this.aboutToolStripMenuItem.Size = new System.Drawing.Size(52, 20);
+            this.aboutToolStripMenuItem.Text = "About";
+            // 
+            // generateInitialFileToolStripMenuItem
+            // 
+            this.generateInitialFileToolStripMenuItem.Name = "generateInitialFileToolStripMenuItem";
+            this.generateInitialFileToolStripMenuItem.Size = new System.Drawing.Size(183, 22);
+            this.generateInitialFileToolStripMenuItem.Text = "Generate Initial File...";
+            this.generateInitialFileToolStripMenuItem.Click += new System.EventHandler(this.generateInitialFileToolStripMenuItem_Click);
+            // 
+            // exitToolStripMenuItem
+            // 
+            this.exitToolStripMenuItem.Name = "exitToolStripMenuItem";
+            this.exitToolStripMenuItem.Size = new System.Drawing.Size(183, 22);
+            this.exitToolStripMenuItem.Text = "Exit";
+            this.exitToolStripMenuItem.Click += new System.EventHandler(this.exitToolStripMenuItem_Click);
+            // 
+            // aboutUsToolStripMenuItem
+            // 
+            this.aboutUsToolStripMenuItem.Name = "aboutUsToolStripMenuItem";
+            this.aboutUsToolStripMenuItem.Size = new System.Drawing.Size(180, 22);
+            this.aboutUsToolStripMenuItem.Text = "About us";
+            this.aboutUsToolStripMenuItem.Click += new System.EventHandler(this.aboutUsToolStripMenuItem_Click);
+            // 
             // Form1
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
@@ -235,12 +291,16 @@
             this.Controls.Add(this.label2);
             this.Controls.Add(this.label1);
             this.Controls.Add(this.txtInputFile);
+            this.Controls.Add(this.menuStrip1);
             this.Icon = ((System.Drawing.Icon)(resources.GetObject("$this.Icon")));
+            this.MainMenuStrip = this.menuStrip1;
             this.Name = "Form1";
             this.Text = "OSDIT";
             ((System.ComponentModel.ISupportInitialize)(this.dataGridView)).EndInit();
             this.groupBox1.ResumeLayout(false);
             ((System.ComponentModel.ISupportInitialize)(this.pictureBox1)).EndInit();
+            this.menuStrip1.ResumeLayout(false);
+            this.menuStrip1.PerformLayout();
             this.ResumeLayout(false);
             this.PerformLayout();
 
@@ -265,6 +325,12 @@
         private System.Windows.Forms.Label label4;
         private System.Windows.Forms.Button setBtn;
         private System.Windows.Forms.PictureBox pictureBox1;
+        private System.Windows.Forms.MenuStrip menuStrip1;
+        private System.Windows.Forms.ToolStripMenuItem toolStripMenuItem1;
+        private System.Windows.Forms.ToolStripMenuItem generateInitialFileToolStripMenuItem;
+        private System.Windows.Forms.ToolStripMenuItem exitToolStripMenuItem;
+        private System.Windows.Forms.ToolStripMenuItem aboutToolStripMenuItem;
+        private System.Windows.Forms.ToolStripMenuItem aboutUsToolStripMenuItem;
     }
 }
 

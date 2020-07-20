@@ -48,7 +48,7 @@ namespace FolderPermission.Utilities
                     permission = "R";
                 }
                 
-                if (rule.IdentityReference.Value.ToLower().Contains(Config.fileServer.ToLower()))
+                if (rule.IdentityReference.Value.ToUpper().Contains(Config.fileServer.ToUpper()))
                 {
                     
                     // Groups
@@ -122,7 +122,7 @@ namespace FolderPermission.Utilities
                 }
             }
         }
-        private static void searchDir(string path, List<string> output, decimal deepLimit)
+        public static void searchDir(string path, List<string> output, decimal deepLimit)
         {
             if (deepLimit > 0)
             {
@@ -135,10 +135,9 @@ namespace FolderPermission.Utilities
                     output.AddRange(dirs);
                     foreach (string dir in dirs)
                     {
-                        searchDir(dir, output, deepLimit--);
+                        searchDir(dir, output, --deepLimit);
                     }
                 }
-                
             }
         }
         public static void SetPermissionDirectory(string DirectoryName, string UserAccount, FileSystemRights right)
@@ -298,10 +297,18 @@ namespace FolderPermission.Utilities
                     group.Save();
                 }
             }
-            catch (Exception ex)
+            catch (Exception)
             {
                 //doSomething with E.Message.ToString(); 
-                MessageBox.Show(ex.ToString());
+                string[] splited = userId.Split('\\');
+                string domain = splited[0];
+                string userPath = string.Format("WinNT://{0}/{1},user", domain, splited[1]);
+                string groupPath = string.Format("WinNT://{0}/{1},group", Environment.MachineName, groupName);
+                using (DirectoryEntry group = new DirectoryEntry(groupPath))
+                {
+                    group.Invoke("Add", userPath);
+                    group.CommitChanges();
+                }
             }
         }
 
@@ -316,10 +323,17 @@ namespace FolderPermission.Utilities
                     group.Save();
                 }
             }
-            catch (Exception ex)
+            catch (Exception)
             {
-                //doSomething with E.Message.ToString(); 
-                MessageBox.Show(ex.ToString());
+                string[] splited = userId.Split('\\');
+                string domain = splited[0];
+                string userPath = string.Format("WinNT://{0}/{1},user", domain, splited[1]);
+                string groupPath = string.Format("WinNT://{0}/{1},group", Environment.MachineName, groupName);
+                using (DirectoryEntry group = new DirectoryEntry(groupPath))
+                {
+                    group.Invoke("Remove", userPath);
+                    group.CommitChanges();
+                }
             }
         }
     }
