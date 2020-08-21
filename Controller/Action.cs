@@ -72,7 +72,7 @@ namespace FolderPermission.Controller
                             {
                                 string userAccount = dr["UserAccount"].ToString();
                                 var exist = userDt.Select("[UserAccount]='" + userAccount + "'");
-                                if (exist.Length > 0 && exist[0]["Permission"].ToString() == dr[dc.ColumnName].ToString())
+                                if (isSamePermissionLevel(exist, dr[dc.ColumnName].ToString()))
                                 {
                                     continue; // Same permission
                                 }
@@ -81,7 +81,7 @@ namespace FolderPermission.Controller
                                     string role = dr["Role"].ToString();
                                     if (role != "-" && role != "")
                                     {
-                                        var groupExist = userDt.Select("[Role]='" + dr["Role"] + "'");
+                                        var groupExist = userDt.Select("[Role]='" + role + "'");
                                         bool isGroupExist = Permission.isGroupExist(role);
                                         if (isGroupExist && groupExist.Length > 0)
                                         {
@@ -153,7 +153,7 @@ namespace FolderPermission.Controller
                             {
                                 string userAccount = dr["UserAccount"].ToString();
                                 var exist = userDt.Select("[UserAccount]='" + userAccount + "'");
-                                if (exist.Length > 0 && exist[0]["Permission"].ToString() == dr[dc.ColumnName].ToString())
+                                if (isSamePermissionLevel(exist, dr[dc.ColumnName].ToString()))
                                 {
                                     dr[dc.ColumnName] = dr[dc.ColumnName].ToString() + " [" + passString + "]";
                                 }
@@ -209,6 +209,20 @@ namespace FolderPermission.Controller
                 worksheet.Columns(1, i).AdjustToContents();
                 workbook.SaveAs(outputFile);
             }
+        }
+        private static bool isSamePermissionLevel(DataRow[] rows, string permission)
+        {
+            bool isSame = false;
+            foreach (DataRow dr in rows)
+            {
+                if (dr["Permission"].ToString() == permission)
+                {
+                    isSame = true;
+                    break;
+                }
+            }
+
+            return isSame;
         }
         
     }

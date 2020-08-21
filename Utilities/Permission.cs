@@ -50,19 +50,24 @@ namespace FolderPermission.Utilities
                 
                 if (rule.IdentityReference.Value.ToUpper().Contains(Config.fileServer.ToUpper()))
                 {
-                    
                     // Groups
                     if (isGroupExist(rule.IdentityReference.Value.ToLower())) {
                         var memberList = getMembers(rule.IdentityReference.Value);
                         foreach (var member in memberList)
                         {
-                            string group = rule.IdentityReference.Value.Replace(Config.fileServer + "\\", "");
-                            string strIdx = ",DC=";
-                            int pFrom = member.DistinguishedName.IndexOf(strIdx) + strIdx.Length;
-                            string domain = member.DistinguishedName.Substring(pFrom);
-                            int pTo = domain.LastIndexOf(strIdx);
-                            domain = domain.Substring(0, pTo);
-                            dt.Rows.Add(member.DisplayName, group, member.EmailAddress, member.EmployeeId, domain + "\\" + member.SamAccountName, permission);
+                            try
+                            {
+                                string group = rule.IdentityReference.Value.Replace(Config.fileServer + "\\", "");
+                                string strIdx = ",DC=";
+                                int pFrom = member.DistinguishedName.IndexOf(strIdx) + strIdx.Length;
+                                string domain = member.DistinguishedName.Substring(pFrom);
+                                int pTo = domain.LastIndexOf(strIdx);
+                                domain = domain.Substring(0, pTo);
+                                dt.Rows.Add(member.DisplayName, group, member.EmailAddress, member.EmployeeId, domain + "\\" + member.SamAccountName, permission);
+                            } catch (Exception ex)
+                            {
+                                MessageBox.Show(ex.Message);
+                            }
                         }
                     } else
                     {
@@ -306,8 +311,16 @@ namespace FolderPermission.Utilities
                 string groupPath = string.Format("WinNT://{0}/{1},group", Environment.MachineName, groupName);
                 using (DirectoryEntry group = new DirectoryEntry(groupPath))
                 {
-                    group.Invoke("Add", userPath);
-                    group.CommitChanges();
+                    try
+                    {
+                        group.Invoke("Add", userPath);
+                        group.CommitChanges();
+                    }
+                    catch (Exception ex)
+                    {
+                        MessageBox.Show("Failed to add group : " + userId + "\nGroup : " + groupName + "" + "\nReason : " + ex.Message);
+                    }
+                    
                 }
             }
         }
