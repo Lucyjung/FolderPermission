@@ -138,9 +138,10 @@ namespace FolderPermission.Utilities
                 } else
                 {
                     output.AddRange(dirs);
+                    deepLimit--;
                     foreach (string dir in dirs)
                     {
-                        searchDir(dir, output, --deepLimit);
+                        searchDir(dir, output, deepLimit);
                     }
                 }
             }

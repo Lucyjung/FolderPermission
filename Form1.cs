@@ -206,21 +206,35 @@ namespace FolderPermission
             };
             Label textLabel = new Label() { Left = 50, Top = 20, Width = 400, Text = text };
             TextBox textBox = new TextBox() { Left = 50, Top = 50, Width = 400 };
+            Label depthLabel = new Label() { Left = 50, Top = 80, Width = 50, Text = "Depth" };
+            TextBox depthBox = new TextBox() { Left = 100, Top = 80, Width =50, Text= "1" };
             Button confirmation = new Button() { Text = "Ok", Left = 350, Width = 100, Top = 70, DialogResult = DialogResult.OK };
+
             prompt.Controls.Add(textBox);
             prompt.Controls.Add(confirmation);
             prompt.Controls.Add(textLabel);
+            prompt.Controls.Add(depthLabel);
+            prompt.Controls.Add(depthBox);
             prompt.AcceptButton = confirmation;
 
             initFilePath = prompt.ShowDialog() == DialogResult.OK ? textBox.Text : "";
-            promptClick();
+            int number;
+            bool success = Int32.TryParse(depthBox.Text, out number);
+            if (success)
+            {
+                promptClick(number);
+            } else
+            {
+                MessageBox.Show("Depth Must be Number", "OSDIT");
+            }
+            
         }
-        private void promptClick()
+        private void promptClick(int depth = 1, int ignore=0)
         {
             if (initFilePath != "")
             {
                 List<string> folders = new List<string>();
-                Permission.searchDir(initFilePath, folders, 1);
+                Permission.searchDir(initFilePath, folders, depth);
                 DataTable initdt = new DataTable();
                 initdt.Columns.Add("Name", typeof(string));
                 initdt.Columns.Add("Role", typeof(string));
