@@ -34,7 +34,13 @@ namespace FolderPermission.Controller
                                 if (exist.Length > 0)
                                 {
                                     int index = dt.Rows.IndexOf(exist[0]);
-                                    dt.Rows[index][dc.ColumnName] = dr["Permission"];
+                                    if (dt.Rows[index][dc.ColumnName].ToString() != "R/W")
+                                    {
+                                        if (dt.Rows[index][dc.ColumnName].ToString() != "R")
+                                        {
+                                            dt.Rows[index][dc.ColumnName] = dr["Permission"];
+                                        }
+                                    }
                                 }
                                 else
                                 {
