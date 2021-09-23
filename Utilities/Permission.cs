@@ -166,11 +166,18 @@ namespace FolderPermission.Utilities
             DirectorySecurity dirSecurity = directoryInfo.GetAccessControl();
 
             // Add the FileSystemAccessRule to the security settings.
-            dirSecurity.RemoveAccessRule(new FileSystemAccessRule(UserAccount, FileSystemRights.FullControl, InheritanceFlags.ContainerInherit | InheritanceFlags.ObjectInherit, PropagationFlags.None, AccessType));
-            dirSecurity.AddAccessRule(new FileSystemAccessRule(UserAccount, UserRights, InheritanceFlags.ContainerInherit | InheritanceFlags.ObjectInherit, PropagationFlags.None, AccessType));
+            try
+            {
+                dirSecurity.RemoveAccessRule(new FileSystemAccessRule(UserAccount, FileSystemRights.FullControl, InheritanceFlags.ContainerInherit | InheritanceFlags.ObjectInherit, PropagationFlags.None, AccessType));
+                dirSecurity.AddAccessRule(new FileSystemAccessRule(UserAccount, UserRights, InheritanceFlags.ContainerInherit | InheritanceFlags.ObjectInherit, PropagationFlags.None, AccessType));
+
+                // Set the access settings.
+                directoryInfo.SetAccessControl(dirSecurity);
+            } catch (Exception ex)
+            {
+                MessageBox.Show("Unable to set : " + UserAccount + " . At Directory : " + DirectoryName);
+            }
             
-            // Set the access settings.
-            directoryInfo.SetAccessControl(dirSecurity);
         }
         public static List<UserPrincipal> getMembers(string groupName)
         {

@@ -7,6 +7,7 @@ using System.Text;
 using System.Threading.Tasks;
 using System.Windows.Forms;
 using ClosedXML.Excel;
+using System.IO;
 
 namespace FolderPermission.Controller
 {
@@ -72,6 +73,10 @@ namespace FolderPermission.Controller
                     {
                         if (dc.ColumnName.ToUpper().Contains(Config.fileServer.ToUpper()))
                         {
+                            if (!Directory.Exists(dc.ColumnName))
+                            {
+                                Directory.CreateDirectory(dc.ColumnName);
+                            }
                             DataTable userDt = Permission.getPermission(dc.ColumnName);
                             // Add, Update
                             foreach (DataRow dr in dt.Rows)
